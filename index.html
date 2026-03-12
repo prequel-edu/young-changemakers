@@ -1613,90 +1613,54 @@
         </div>
 
         <div class="form-card">
-          <form action="#" method="POST" name="changemakers-application">
-            <div class="form-row">
-              <div class="form-group">
-                <label for="first-name">First Name</label>
-                <input type="text" id="first-name" name="first-name" placeholder="Your first name" required/>
-              </div>
-              <div class="form-group">
-                <label for="last-name">Last Name</label>
-                <input type="text" id="last-name" name="last-name" placeholder="Your last name" required/>
-              </div>
-            </div>
-
-            <div class="form-row">
-              <div class="form-group">
-                <label for="age">Age</label>
-                <input type="number" id="age" name="age" min="12" max="19" placeholder="Your age" required/>
-              </div>
-              <div class="form-group">
-                <label for="grade">Grade</label>
-                <select id="grade" name="grade" required>
-                  <option value="" disabled selected>Select your grade</option>
-                  <option value="8">8th Grade</option>
-                  <option value="9">9th Grade</option>
-                  <option value="10">10th Grade</option>
-                  <option value="11">11th Grade</option>
-                </select>
-              </div>
-            </div>
-
-            <div class="form-row">
-              <div class="form-group">
-                <label for="city">City</label>
-                <input type="text" id="city" name="city" placeholder="Your city" required/>
-              </div>
-              <div class="form-group">
-                <label for="state">State</label>
-                <input type="text" id="state" name="state" placeholder="Your state" required/>
-              </div>
-            </div>
-
-            <div class="form-group">
-              <label for="email">Your Email</label>
-              <input type="email" id="email" name="email" placeholder="you@email.com" required/>
-            </div>
-
-            <div class="form-group">
-              <label for="parent-email">Parent / Guardian Email</label>
-              <input type="email" id="parent-email" name="parent-email" placeholder="parent@email.com" required/>
-            </div>
-
-            <div class="form-divider"></div>
-
-            <div class="form-group">
-              <label for="pitch">What problem do you want to solve, and how would you use $5K to grow your project?</label>
-              <textarea id="pitch" name="pitch" placeholder="Tell us in 2-3 sentences..." required></textarea>
-              <div class="form-hint">2&ndash;3 sentences. Be specific about the problem and your plan.</div>
-            </div>
-
-            <div class="form-group">
-              <label for="video">60-Second Video Pitch</label>
-              <input type="url" id="video" name="video" placeholder="Link to your video (YouTube, TikTok, Google Drive, etc.)" required/>
-              <div class="form-hint">Upload your video anywhere and paste the link. Keep it to 60 seconds.</div>
-            </div>
-
-            <div class="form-group">
-              <label for="social-link">Link to video on social media <span class="optional">(optional)</span></label>
-              <input type="url" id="social-link" name="social-link" placeholder="TikTok, Instagram, or LinkedIn post URL"/>
-              <div class="form-hint">If you posted your pitch on social media, share the link. Use #PrequelChangemakers and tag @joinprequel.</div>
-            </div>
-
-            <div class="form-group">
-              <label for="financial-need">Tell us about your financial situation</label>
-              <textarea id="financial-need" name="financial-need" placeholder="Let us know your financial situation and why you need the funding." rows="3" required></textarea>
-              <div class="form-hint">This helps us distribute scholarships fairly.</div>
-            </div>
-
-            <div class="form-group">
-              <label for="tax-return">Family Tax Return <span class="optional">(most recent year)</span></label>
-              <input type="file" id="tax-return" name="tax-return" accept=".pdf,.jpg,.jpeg,.png" class="file-upload-input"/>
-              <div class="form-hint">Upload your most recent family tax return (Form 1040 or equivalent). PDF or image accepted. Used only to assess financial need — kept confidential.</div>
-            </div>
-
-            <button type="submit" class="form-submit">Submit Application &rarr;</button>
-          </form>
+          <div id="ycf-hubspot-form"></div>
+          <script charset="utf-8" type="text/javascript" src="//js.hsforms.net/forms/embed/v2.js"></script>
+          <script>
+            hbspt.forms.create({
+              region: "na1",
+              portalId: "24318280",
+              formId: "86fd5d96-827b-4777-973b-a16943e3b723",
+              target: "#ycf-hubspot-form",
+              onFormReady: function($form) {
+                $form.find('input[name="firstname"]').attr('placeholder', 'Your first name');
+                $form.find('input[name="lastname"]').attr('placeholder', 'Your last name');
+                $form.find('input[name="email"]').attr('placeholder', 'you@email.com');
+                $form.find('input[name="ycf_parent_email"]').attr('placeholder', 'parent@email.com');
+                $form.find('input[name="city"]').attr('placeholder', 'Your city');
+                $form.find('input[name="state"]').attr('placeholder', 'Your state');
+                $form.find('textarea[name="ycf_project_pitch"]').attr('placeholder', 'Tell us in 2-3 sentences...');
+                $form.find('input[name="ycf_video_link"]').attr('placeholder', 'Link to your video (YouTube, TikTok, Google Drive, etc.)');
+                $form.find('input[name="ycf_social_media_link"]').attr('placeholder', 'TikTok, Instagram, or LinkedIn post URL');
+                $form.find('textarea[name="ycf_financial_need"]').attr('placeholder', 'Let us know your financial situation and why you need the funding.');
+              }
+            });
+          </script>
+          <style>
+            #ycf-hubspot-form .hs-form fieldset { max-width: 100% !important; }
+            #ycf-hubspot-form .hs-form .hs-form-field { margin-bottom: 20px; }
+            #ycf-hubspot-form .hs-form label { display: block; font-size: 13px; font-weight: 600; color: var(--mint-500); margin-bottom: 6px; font-family: var(--font-body); }
+            #ycf-hubspot-form .hs-form input[type=text],
+            #ycf-hubspot-form .hs-form input[type=email],
+            #ycf-hubspot-form .hs-form input[type=number],
+            #ycf-hubspot-form .hs-form input[type=url],
+            #ycf-hubspot-form .hs-form select,
+            #ycf-hubspot-form .hs-form textarea { width: 100%; padding: 12px 16px; border: 1.5px solid #d1d5db; border-radius: 8px; font-size: 15px; font-family: var(--font-body); color: var(--mint-500); background: #fff; box-sizing: border-box; transition: border-color 0.2s; }
+            #ycf-hubspot-form .hs-form input:focus,
+            #ycf-hubspot-form .hs-form select:focus,
+            #ycf-hubspot-form .hs-form textarea:focus { outline: none; border-color: var(--mint-200); box-shadow: 0 0 0 3px rgba(0,139,114,0.1); }
+            #ycf-hubspot-form .hs-form textarea { min-height: 100px; resize: vertical; }
+            #ycf-hubspot-form .hs-form .hs-error-msgs { list-style: none; padding: 0; margin: 4px 0 0; }
+            #ycf-hubspot-form .hs-form .hs-error-msgs li label { color: #e53e3e; font-size: 12px; font-weight: 400; }
+            #ycf-hubspot-form .hs-form .hs-help-text { font-size: 12px; color: #6b7280; margin-top: 4px; font-family: var(--font-body); }
+            #ycf-hubspot-form .hs-form fieldset.form-columns-2 .hs-form-field { width: 50%; display: inline-block; vertical-align: top; padding-right: 10px; box-sizing: border-box; }
+            #ycf-hubspot-form .hs-form fieldset.form-columns-2 .hs-form-field:last-child { padding-right: 0; padding-left: 10px; }
+            #ycf-hubspot-form .hs-submit .actions input[type=submit] { width: 100%; padding: 16px; background: var(--mint-400); color: #fff; border: none; border-radius: 10px; font-size: 17px; font-weight: 700; font-family: var(--font-heading); cursor: pointer; margin-top: 8px; transition: background 0.2s; }
+            #ycf-hubspot-form .hs-submit .actions input[type=submit]:hover { background: var(--mint-300); }
+            #ycf-hubspot-form .submitted-message { font-family: var(--font-body); font-size: 16px; color: var(--mint-400); text-align: center; padding: 24px 0; }
+            @media (max-width: 600px) {
+              #ycf-hubspot-form .hs-form fieldset.form-columns-2 .hs-form-field { width: 100%; display: block; padding: 0; }
+            }
+          </style>
         </div>
 
         <div class="form-footer">
