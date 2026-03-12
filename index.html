@@ -856,22 +856,16 @@
       width: 140px;
       min-height: 180px;
       flex-shrink: 0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 40px;
+      overflow: hidden;
     }
 
-    .story-card:nth-child(1) .story-card__img { background: linear-gradient(135deg, var(--fuchsia-300), var(--fuchsia-500)); }
-    .story-card:nth-child(2) .story-card__img { background: linear-gradient(135deg, var(--mint-300), var(--mint-400)); }
-    .story-card:nth-child(3) .story-card__img { background: linear-gradient(135deg, var(--kiwi-300), var(--mint-300)); }
-    .story-card:nth-child(4) .story-card__img { background: linear-gradient(135deg, #361002, var(--mint-400)); }
-
-    .story-card__img-placeholder {
-      width: 60px;
-      height: 60px;
-      border-radius: 50%;
-      background: rgba(255,255,255,0.15);
+    .story-card__photo {
+      width: 100%;
+      height: 100%;
+      min-height: 180px;
+      object-fit: cover;
+      object-position: center top;
+      display: block;
     }
 
     .story-card__body {
@@ -1323,7 +1317,7 @@
         </svg>
         <span class="nav__cobrand">
           <span class="nav__cobrand-sep">&times;</span>
-          <img src="https://drive.google.com/uc?export=view&id=1swLxpwbu0POWh_afYB9enUt0E4RO_mY4" alt="Limitless Education" class="nav__limitless-logo"/>
+          <img src="images/limitless-logo.png" alt="Limitless Education" class="nav__limitless-logo"/>
         </span>
       </a>
       <a href="#apply" class="nav__cta">Apply Now</a>
@@ -1529,7 +1523,7 @@
 
       <div class="stories-grid">
         <div class="story-card">
-          <div class="story-card__img"><div class="story-card__img-placeholder"></div></div>
+          <div class="story-card__img"><img src="images/students/anaiah-singh.jpg" alt="Anaiah Singh" class="story-card__photo"></div>
           <div class="story-card__body">
             <div class="story-card__name">Anaiah Singh</div>
             <div class="story-card__project">Hearttalk</div>
@@ -1539,7 +1533,7 @@
         </div>
 
         <div class="story-card">
-          <div class="story-card__img"><div class="story-card__img-placeholder"></div></div>
+          <div class="story-card__img"><img src="images/students/shivin-singh.png" alt="Shivin Singh" class="story-card__photo"></div>
           <div class="story-card__body">
             <div class="story-card__name">Shivin Singh</div>
             <div class="story-card__project">Legisim</div>
@@ -1549,7 +1543,7 @@
         </div>
 
         <div class="story-card">
-          <div class="story-card__img"><div class="story-card__img-placeholder"></div></div>
+          <div class="story-card__img"><img src="images/students/vaani-tiwari.jpg" alt="Vaani Tiwari" class="story-card__photo"></div>
           <div class="story-card__body">
             <div class="story-card__name">Vaani Tiwari</div>
             <div class="story-card__project">The Hidden Loop</div>
@@ -1559,7 +1553,7 @@
         </div>
 
         <div class="story-card">
-          <div class="story-card__img"><div class="story-card__img-placeholder"></div></div>
+          <div class="story-card__img"><img src="images/students/divya-taneja.jpg" alt="Divya Taneja" class="story-card__photo"></div>
           <div class="story-card__body">
             <div class="story-card__name">Divya Taneja</div>
             <div class="story-card__project">Saha PCOS</div>
