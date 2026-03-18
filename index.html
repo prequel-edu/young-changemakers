@@ -3,9 +3,9 @@
 <head>
   <meta charset="utf-8"/>
   <title>Young Changemakers Fund | Prequel × Limitless Education</title>
-  <meta content="Over $75K in prize funding for teen social impact founders. Scholarships, grants, and pitch competition prizes. Apply in under 5 minutes." name="description"/>
+  <meta content="Over $100K in prize funding for teen social impact founders. Scholarships, grants, and pitch competition prizes. Apply in under 5 minutes." name="description"/>
   <meta content="Young Changemakers Fund | Prequel × Limitless Education" property="og:title"/>
-  <meta content="Over $75K in prize funding for teen social impact founders. Scholarships, grants, and pitch competition prizes. Apply in under 5 minutes." property="og:description"/>
+  <meta content="Over $100K in prize funding for teen social impact founders. Scholarships, grants, and pitch competition prizes. Apply in under 5 minutes." property="og:description"/>
   <meta content="width=device-width, initial-scale=1" name="viewport"/>
   <meta property="og:type" content="website"/>
   <meta name="twitter:card" content="summary_large_image"/>
@@ -1330,14 +1330,14 @@
     <div class="hero__inner">
       <div class="hero__tag">Prequel &times; Limitless Education &mdash; Young Changemakers Fund</div>
       <h1 class="hero__headline"><span class="hl-narrow">Got a project that</span> <span class="hl-accent">actually matters?</span></h1>
-      <p class="hero__sub">Over $75K in prize funding &mdash; scholarships, grants, and pitch competition prizes &mdash; for high school students building projects that make the world better. Open to grades 8&ndash;11 nationwide.</p>
+      <p class="hero__sub">Over $100K in prize funding &mdash; scholarships, grants, and pitch competition prizes &mdash; for high school students building projects that make the world better. Open to grades 8&ndash;11 nationwide.</p>
       <div class="hero__actions">
         <a href="#apply" class="btn-primary btn-primary--kiwi">Apply Now &rarr;</a>
         <a href="#how-it-works" class="btn-primary btn-primary--outline">How It Works</a>
       </div>
       <div class="hero__stats">
         <div>
-          <div class="hero__stat-value">$75K+</div>
+          <div class="hero__stat-value">$100K+</div>
           <div class="hero__stat-label">Total fund</div>
         </div>
         <div>
@@ -1628,7 +1628,23 @@
                 $form.find('textarea[name="ycf_project_pitch"]').attr('placeholder', 'Tell us in 2-3 sentences...');
                 $form.find('input[name="ycf_video_link"]').attr('placeholder', 'Link to your video (YouTube, TikTok, Google Drive, etc.)');
                 $form.find('input[name="ycf_social_media_link"]').attr('placeholder', 'TikTok, Instagram, or LinkedIn post URL');
-                $form.find('textarea[name="ycf_financial_need"]').attr('placeholder', 'Share a bit about what this scholarship would mean for you and your project.');
+                // Replace financial need textarea with a household income dropdown
+                var $fnField = $form.find('textarea[name="ycf_financial_need"]');
+                if ($fnField.length) {
+                  $fnField.hide();
+                  var incomeSelect = '<select id="ycf_income_select" style="width:100%;padding:12px 40px 12px 16px;border:1.5px solid #ccc;border-radius:10px;font-size:15px;font-family:\'PP Mori\',sans-serif;color:#1a1a1a;background:#fafaf8 url(\'data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'12\' height=\'7\' fill=\'none\'%3E%3Cpath d=\'M1 1l5 5 5-5\' stroke=\'%23999\' stroke-width=\'1.5\' stroke-linecap=\'round\' stroke-linejoin=\'round\'/%3E%3C/svg%3E\') no-repeat right 16px center;box-sizing:border-box;-webkit-appearance:none;appearance:none;cursor:pointer;">'
+                    + '<option value="">Select household income range</option>'
+                    + '<option value="Under $50,000">Under $50,000</option>'
+                    + '<option value="$50,000–$80,000">$50,000–$80,000</option>'
+                    + '<option value="$80,000–$120,000">$80,000–$120,000</option>'
+                    + '<option value="$120,000–$150,000">$120,000–$150,000</option>'
+                    + '<option value="Over $150,000">Over $150,000</option>'
+                    + '</select>';
+                  $fnField.before(incomeSelect);
+                  $('#ycf_income_select').on('change', function() {
+                    $fnField.val($(this).val());
+                  });
+                }
               }
             });
           </script>
@@ -1746,7 +1762,7 @@
 
         <details class="faq-item">
           <summary>How are scholarships determined?</summary>
-          <p class="faq-item__answer">Scholarships are need-based. In the application, you'll share your household income range and tell us why this scholarship would be meaningful to you. We also evaluate the strength of your idea and video pitch. Two students receive full rides. The remaining scholarship recipients receive partial tuition coverage. All scholarship funds are confirmed upon acceptance into the program.</p>
+          <p class="faq-item__answer">Scholarships are need-based. In the application, you'll share your household income range and tell us why this scholarship would be meaningful to you. We also evaluate the strength of your idea and video pitch. Four students receive full rides &mdash; two funded through the Limitless Education grant, and two provided directly by Prequel. The remaining scholarship recipients receive partial tuition coverage. All scholarship funds are confirmed upon acceptance into the program.</p>
         </details>
 
         <details class="faq-item">
