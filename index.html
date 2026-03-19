@@ -1655,6 +1655,22 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                 $form.find('textarea[name="ycf_project_pitch"]').attr('placeholder', 'Tell us in 2-3 sentences...');
                 $form.find('input[name="ycf_video_link"]').attr('placeholder', 'Link to your video (YouTube, TikTok, Google Drive, etc.)');
                 $form.find('input[name="ycf_social_media_link"]').attr('placeholder', 'TikTok, Instagram, or LinkedIn post URL');
+                // Replace grade select with a labelled custom dropdown
+                var $gradeField = $form.find('select[name="what_grade_are_you_currently_completing_"]');
+                if ($gradeField.length) {
+                  $gradeField.hide();
+                  var gradeSelect = '<select id="ycf_grade_select" style="width:100%;padding:12px 40px 12px 16px;border:1.5px solid #ccc;border-radius:10px;font-size:15px;font-family:'PP Mori',sans-serif;color:#1a1a1a;background:#fafaf8 url('data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='7' fill='none'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23999' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E') no-repeat right 16px center;box-sizing:border-box;-webkit-appearance:none;appearance:none;cursor:pointer;">'
+                    + '<option value="">Please Select</option>'
+                    + '<option value="8">Grade 8</option>'
+                    + '<option value="9">Grade 9</option>'
+                    + '<option value="10">Grade 10</option>'
+                    + '<option value="11">Grade 11</option>'
+                    + '</select>';
+                  $gradeField.before(gradeSelect);
+                  $('#ycf_grade_select').on('change', function() {
+                    $gradeField.val($(this).val()).trigger('change');
+                  });
+                }
                 // Replace financial need textarea with a household income dropdown
                 var $fnField = $form.find('textarea[name="ycf_financial_need"]');
                 if ($fnField.length) {
