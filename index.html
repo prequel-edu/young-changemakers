@@ -1655,23 +1655,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                 $form.find('textarea[name="ycf_project_pitch"]').attr('placeholder', 'Tell us in 2-3 sentences...');
                 $form.find('input[name="ycf_video_link"]').attr('placeholder', 'Link to your video (YouTube, TikTok, Google Drive, etc.)');
                 $form.find('input[name="ycf_social_media_link"]').attr('placeholder', 'TikTok, Instagram, or LinkedIn post URL');
-                // Inject options into grade dropdown (form has empty options array)
-                var $gradeSelect = $form.find('select[name="ycf_grade"]');
-                if ($gradeSelect.length && $gradeSelect.find('option[value!=""]').length === 0) {
-                  $gradeSelect.append('<option value="8">8th Grade</option>');
-                  $gradeSelect.append('<option value="9">9th Grade</option>');
-                  $gradeSelect.append('<option value="10">10th Grade</option>');
-                  $gradeSelect.append('<option value="11">11th Grade</option>');
-                }
-                // Inject options into household income dropdown (same issue)
-                var $incomeSelect = $form.find('select[name="ycf_household_income"]');
-                if ($incomeSelect.length && $incomeSelect.find('option[value!=""]').length === 0) {
-                  $incomeSelect.append('<option value="under_50k">Under $50,000</option>');
-                  $incomeSelect.append('<option value="50k_80k">$50,000 – $80,000</option>');
-                  $incomeSelect.append('<option value="80k_120k">$80,000 – $120,000</option>');
-                  $incomeSelect.append('<option value="120k_150k">$120,000 – $150,000</option>');
-                  $incomeSelect.append('<option value="over_150k">Over $150,000</option>');
-                }
               }
             });
           </script>
