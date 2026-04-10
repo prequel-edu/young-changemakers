@@ -1631,7 +1631,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <div class="form-wrapper">
         <div class="form-header">
           <h2 class="form-header__title">Apply <span class="hl-narrow">in under</span> 5 minutes</h2>
-          <p class="form-header__sub">One form for both the scholarship application and contest entry. <strong>Open to students in grades 8&ndash;11 only (ages 13&ndash;19).</strong></p>
+          <p class="form-header__sub">One form for both the scholarship application and contest entry. <strong>Open to students in grades 8&ndash;11 only (ages 13&ndash;18).</strong></p>
         </div>
 
         <div class="form-card">
@@ -1658,9 +1658,9 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
                 // Age validation — grades 8–11 only (ages 13–19)
                 var $ageInput = $form.find('input[name="ycf_age"]');
-                $ageInput.attr('min', '13').attr('max', '19');
+                $ageInput.attr('min', '13').attr('max', '18');
 
-                var AGE_ERROR_MSG = 'This fund is for students in grades 8\u201311 only. You must be 19 or under to apply.';
+                var AGE_ERROR_MSG = 'This fund is for students in grades 8\u201311 only. You must be 18 or under to apply.';
 
                 function showAgeError() {
                   var $field = $ageInput.closest('.hs-form-field');
@@ -1677,7 +1677,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                 // Real-time feedback as user types
                 $ageInput.on('input change', function() {
                   var age = parseInt($(this).val(), 10);
-                  if (!isNaN(age) && age > 19) {
+                  if (!isNaN(age) && age > 18) {
                     showAgeError();
                   } else {
                     clearAgeError();
@@ -1687,7 +1687,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                 // Capture-phase listener fires before HubSpot's own submit handler
                 $form[0].addEventListener('submit', function(e) {
                   var age = parseInt($ageInput.val(), 10);
-                  if (!isNaN(age) && age > 19) {
+                  if (!isNaN(age) && age > 18) {
                     e.preventDefault();
                     e.stopImmediatePropagation();
                     showAgeError();
