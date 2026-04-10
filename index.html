@@ -1679,26 +1679,39 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                     $ageInput.css('border-color', '');
                   }
 
-                  // Track the submitted age so onFormSubmitted can use it
+                  // Video pitch notice
+                  $form.find('input[name="ycf_video_link"]').closest('.hs-form-field').find('.hs-field-desc').remove();
+                  $form.find('input[name="ycf_video_link"]').after('<div class="hs-field-desc" style="font-size:12px;color:#e53e3e;margin-top:4px;font-weight:500;">Applications with no video pitch will not be considered.</div>');
+
+                  // HubSpot uses AJAX (not native form submit) — block via disabling submit button
+                  var $submitBtn = $form.find('input[type="submit"]');
+
+                  function lockSubmit() {
+                    $submitBtn.prop('disabled', true).css({ 'opacity': '0.5', 'cursor': 'not-allowed' });
+                  }
+                  function unlockSubmit() {
+                    $submitBtn.prop('disabled', false).css({ 'opacity': '', 'cursor': '' });
+                  }
+
+                  // Track age + disable button + show error in real time
                   $ageInput.on('input change', function() {
                     submittedAge = parseInt($(this).val(), 10);
                     if (!isNaN(submittedAge) && submittedAge > 18) {
                       showAgeError();
+                      lockSubmit();
                     } else {
                       clearAgeError();
+                      unlockSubmit();
                     }
                   });
+                },
 
-                  // Capture-phase listener fires before HubSpot's own submit handler
-                  $form[0].addEventListener('submit', function(e) {
-                    var age = parseInt($ageInput.val(), 10);
-                    if (!isNaN(age) && age > 18) {
-                      e.preventDefault();
-                      e.stopImmediatePropagation();
-                      showAgeError();
-                      $ageInput[0].scrollIntoView({ behavior: 'smooth', block: 'center' });
-                    }
-                  }, true);
+                // Fallback: if button disable is bypassed, redirect before confirmation page loads
+                onFormSubmit: function($form, data) {
+                  var age = parseInt($form.find('input[name="ycf_age"]').val(), 10);
+                  if (!isNaN(age) && age > 18) {
+                    window.location.href = 'https://changemakers.joinprequel.com/not-eligible/';
+                  }
                 },
 
                 onFormSubmitted: function($form, data) {
@@ -1707,7 +1720,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                     window.location.href = 'https://changemakers.joinprequel.com/not-eligible/';
                   } else {
                     // Eligible (or age unknown) — confirmation page loads, Meta Pixel fires
-                    // Defaulting to confirmation protects real applicants from being silently blocked
                     window.location.href = 'https://www.joinprequel.com/limitless-changemakers-confirmation-page';
                   }
                 }
