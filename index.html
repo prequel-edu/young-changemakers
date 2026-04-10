@@ -1638,64 +1638,79 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
           <div id="ycf-hubspot-form"></div>
           <script charset="utf-8" type="text/javascript" src="//js.hsforms.net/forms/embed/v2.js"></script>
           <script>
-            hbspt.forms.create({
-              region: "na1",
-              portalId: "24318280",
-              formId: "86fd5d96-827b-4777-973b-a16943e3b723",
-              target: "#ycf-hubspot-form",
-              css: "",
-              redirectUrl: "https://www.joinprequel.com/limitless-changemakers-confirmation-page",
-              onFormReady: function($form) {
-                $form.find('input[name="firstname"]').attr('placeholder', 'Your first name');
-                $form.find('input[name="lastname"]').attr('placeholder', 'Your last name');
-                $form.find('input[name="email"]').attr('placeholder', 'you@email.com');
-                $form.find('input[name="ycf_parent_email"]').attr('placeholder', 'parent@email.com');
-                $form.find('input[name="city"]').attr('placeholder', 'Your city');
-                $form.find('input[name="state"]').attr('placeholder', 'Your state');
-                $form.find('textarea[name="ycf_project_pitch"]').attr('placeholder', 'Tell us in 2-3 sentences...');
-                $form.find('input[name="ycf_video_link"]').attr('placeholder', 'Link to your video (YouTube, TikTok, Google Drive, etc.)');
-                $form.find('input[name="ycf_social_media_link"]').attr('placeholder', 'TikTok, Instagram, or LinkedIn post URL');
+            // IIFE so submittedAge is shared between onFormReady and onFormSubmitted
+            (function() {
+              var submittedAge = null;
 
-                // Age validation — grades 8–11 only (ages 13–19)
-                var $ageInput = $form.find('input[name="ycf_age"]');
-                $ageInput.attr('min', '13').attr('max', '18');
+              hbspt.forms.create({
+                region: "na1",
+                portalId: "24318280",
+                formId: "86fd5d96-827b-4777-973b-a16943e3b723",
+                target: "#ycf-hubspot-form",
+                css: "",
+                // No redirectUrl here — redirect is handled conditionally in onFormSubmitted
+                // so the confirmation page (and Meta Pixel) only fires for eligible applicants
+                onFormReady: function($form) {
+                  $form.find('input[name="firstname"]').attr('placeholder', 'Your first name');
+                  $form.find('input[name="lastname"]').attr('placeholder', 'Your last name');
+                  $form.find('input[name="email"]').attr('placeholder', 'you@email.com');
+                  $form.find('input[name="ycf_parent_email"]').attr('placeholder', 'parent@email.com');
+                  $form.find('input[name="city"]').attr('placeholder', 'Your city');
+                  $form.find('input[name="state"]').attr('placeholder', 'Your state');
+                  $form.find('textarea[name="ycf_project_pitch"]').attr('placeholder', 'Tell us in 2-3 sentences...');
+                  $form.find('input[name="ycf_video_link"]').attr('placeholder', 'Link to your video (YouTube, TikTok, Google Drive, etc.)');
+                  $form.find('input[name="ycf_social_media_link"]').attr('placeholder', 'TikTok, Instagram, or LinkedIn post URL');
 
-                var AGE_ERROR_MSG = 'This fund is for students in grades 8\u201311 only. You must be 18 or under to apply.';
+                  // Age validation — grades 8–11 only (ages 13–18)
+                  var $ageInput = $form.find('input[name="ycf_age"]');
+                  $ageInput.attr('min', '13').attr('max', '18');
 
-                function showAgeError() {
-                  var $field = $ageInput.closest('.hs-form-field');
-                  $field.find('.ycf-age-error').remove();
-                  $ageInput.css('border-color', '#e53e3e');
-                  $field.append('<ul class="hs-error-msgs inputs-list ycf-age-error"><li><label class="hs-error-msg" style="color:#e53e3e!important;font-size:12px!important;font-weight:400!important;">' + AGE_ERROR_MSG + '</label></li></ul>');
-                }
+                  var AGE_ERROR_MSG = 'This fund is for students in grades 8\u201311 only. You must be 18 or under to apply.';
 
-                function clearAgeError() {
-                  $ageInput.closest('.hs-form-field').find('.ycf-age-error').remove();
-                  $ageInput.css('border-color', '');
-                }
-
-                // Real-time feedback as user types
-                $ageInput.on('input change', function() {
-                  var age = parseInt($(this).val(), 10);
-                  if (!isNaN(age) && age > 18) {
-                    showAgeError();
-                  } else {
-                    clearAgeError();
+                  function showAgeError() {
+                    var $field = $ageInput.closest('.hs-form-field');
+                    $field.find('.ycf-age-error').remove();
+                    $ageInput.css('border-color', '#e53e3e');
+                    $field.append('<ul class="hs-error-msgs inputs-list ycf-age-error"><li><label class="hs-error-msg" style="color:#e53e3e!important;font-size:12px!important;font-weight:400!important;">' + AGE_ERROR_MSG + '</label></li></ul>');
                   }
-                });
 
-                // Capture-phase listener fires before HubSpot's own submit handler
-                $form[0].addEventListener('submit', function(e) {
-                  var age = parseInt($ageInput.val(), 10);
-                  if (!isNaN(age) && age > 18) {
-                    e.preventDefault();
-                    e.stopImmediatePropagation();
-                    showAgeError();
-                    $ageInput[0].scrollIntoView({ behavior: 'smooth', block: 'center' });
+                  function clearAgeError() {
+                    $ageInput.closest('.hs-form-field').find('.ycf-age-error').remove();
+                    $ageInput.css('border-color', '');
                   }
-                }, true);
-              }
-            });
+
+                  // Track the submitted age so onFormSubmitted can use it
+                  $ageInput.on('input change', function() {
+                    submittedAge = parseInt($(this).val(), 10);
+                    if (!isNaN(submittedAge) && submittedAge > 18) {
+                      showAgeError();
+                    } else {
+                      clearAgeError();
+                    }
+                  });
+
+                  // Capture-phase listener fires before HubSpot's own submit handler
+                  $form[0].addEventListener('submit', function(e) {
+                    var age = parseInt($ageInput.val(), 10);
+                    if (!isNaN(age) && age > 18) {
+                      e.preventDefault();
+                      e.stopImmediatePropagation();
+                      showAgeError();
+                      $ageInput[0].scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    }
+                  }, true);
+                },
+
+                onFormSubmitted: function($form, data) {
+                  if (submittedAge !== null && submittedAge <= 18) {
+                    // Eligible — send to confirmation page so Meta Pixel fires
+                    window.location.href = 'https://www.joinprequel.com/limitless-changemakers-confirmation-page';
+                  }
+                  // Over 18: stay on this page, HubSpot shows inline thank-you message
+                  // Confirmation page is never loaded, so Meta Pixel never fires
+                }
+              });
+            })();
           </script>
           <style>
             #ycf-hubspot-form .hs-form fieldset { max-width: 100% !important; }
