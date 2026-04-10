@@ -1631,7 +1631,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <div class="form-wrapper">
         <div class="form-header">
           <h2 class="form-header__title">Apply <span class="hl-narrow">in under</span> 5 minutes</h2>
-          <p class="form-header__sub">One form for both the scholarship application and contest entry.</p>
+          <p class="form-header__sub">One form for both the scholarship application and contest entry. <strong>Open to students in grades 8&ndash;11 only (ages 13&ndash;19).</strong></p>
         </div>
 
         <div class="form-card">
@@ -1655,6 +1655,45 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                 $form.find('textarea[name="ycf_project_pitch"]').attr('placeholder', 'Tell us in 2-3 sentences...');
                 $form.find('input[name="ycf_video_link"]').attr('placeholder', 'Link to your video (YouTube, TikTok, Google Drive, etc.)');
                 $form.find('input[name="ycf_social_media_link"]').attr('placeholder', 'TikTok, Instagram, or LinkedIn post URL');
+
+                // Age validation — grades 8–11 only (ages 13–19)
+                var $ageInput = $form.find('input[name="ycf_age"]');
+                $ageInput.attr('min', '13').attr('max', '19');
+
+                var AGE_ERROR_MSG = 'This fund is for students in grades 8\u201311 only. You must be 19 or under to apply.';
+
+                function showAgeError() {
+                  var $field = $ageInput.closest('.hs-form-field');
+                  $field.find('.ycf-age-error').remove();
+                  $ageInput.css('border-color', '#e53e3e');
+                  $field.append('<ul class="hs-error-msgs inputs-list ycf-age-error"><li><label class="hs-error-msg" style="color:#e53e3e!important;font-size:12px!important;font-weight:400!important;">' + AGE_ERROR_MSG + '</label></li></ul>');
+                }
+
+                function clearAgeError() {
+                  $ageInput.closest('.hs-form-field').find('.ycf-age-error').remove();
+                  $ageInput.css('border-color', '');
+                }
+
+                // Real-time feedback as user types
+                $ageInput.on('input change', function() {
+                  var age = parseInt($(this).val(), 10);
+                  if (!isNaN(age) && age > 19) {
+                    showAgeError();
+                  } else {
+                    clearAgeError();
+                  }
+                });
+
+                // Capture-phase listener fires before HubSpot's own submit handler
+                $form[0].addEventListener('submit', function(e) {
+                  var age = parseInt($ageInput.val(), 10);
+                  if (!isNaN(age) && age > 19) {
+                    e.preventDefault();
+                    e.stopImmediatePropagation();
+                    showAgeError();
+                    $ageInput[0].scrollIntoView({ behavior: 'smooth', block: 'center' });
+                  }
+                }, true);
               }
             });
           </script>
