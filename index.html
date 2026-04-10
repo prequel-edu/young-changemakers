@@ -1703,11 +1703,12 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
                 onFormSubmitted: function($form, data) {
                   if (submittedAge !== null && submittedAge <= 18) {
-                    // Eligible — send to confirmation page so Meta Pixel fires
+                    // Eligible — confirmation page loads, Meta Pixel fires
                     window.location.href = 'https://www.joinprequel.com/limitless-changemakers-confirmation-page';
+                  } else {
+                    // Over 18 — redirect to no-pixel page, confirmation page never loads
+                    window.location.href = 'https://changemakers.joinprequel.com/not-eligible/';
                   }
-                  // Over 18: stay on this page, HubSpot shows inline thank-you message
-                  // Confirmation page is never loaded, so Meta Pixel never fires
                 }
               });
             })();
