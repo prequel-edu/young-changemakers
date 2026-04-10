@@ -1702,12 +1702,13 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                 },
 
                 onFormSubmitted: function($form, data) {
-                  if (submittedAge !== null && submittedAge <= 18) {
-                    // Eligible — confirmation page loads, Meta Pixel fires
-                    window.location.href = 'https://www.joinprequel.com/limitless-changemakers-confirmation-page';
-                  } else {
-                    // Over 18 — redirect to no-pixel page, confirmation page never loads
+                  if (submittedAge !== null && !isNaN(submittedAge) && submittedAge > 18) {
+                    // Confirmed over 18 — redirect to no-pixel page, confirmation page never loads
                     window.location.href = 'https://changemakers.joinprequel.com/not-eligible/';
+                  } else {
+                    // Eligible (or age unknown) — confirmation page loads, Meta Pixel fires
+                    // Defaulting to confirmation protects real applicants from being silently blocked
+                    window.location.href = 'https://www.joinprequel.com/limitless-changemakers-confirmation-page';
                   }
                 }
               });
