@@ -1686,23 +1686,53 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                   // HubSpot uses AJAX (not native form submit) — block via disabling submit button
                   var $submitBtn = $form.find('input[type="submit"]');
 
-                  function lockSubmit() {
-                    $submitBtn.prop('disabled', true).css({ 'opacity': '0.5', 'cursor': 'not-allowed' });
+                  // Parental awareness consent checkbox — injected just above submit
+                  var $submitContainer = $form.find('.hs_submit, .hs-submit').first();
+                  var consentHTML = '' +
+                    '<div class="ycf-consent-field hs-form-field" style="margin-bottom:20px;">' +
+                      '<label style="display:flex!important;align-items:flex-start;gap:10px;font-weight:400!important;font-size:13px!important;color:#1a1a1a!important;cursor:pointer;line-height:1.4;margin-bottom:0!important;">' +
+                        '<input type="checkbox" id="ycf-parent-consent" style="margin-top:3px;flex-shrink:0;width:16px;height:16px;cursor:pointer;accent-color:#f956f2;">' +
+                        '<span>I confirm that my parent or legal guardian is aware that I am submitting this application. <span style="color:#f956f2;">*</span></span>' +
+                      '</label>' +
+                      '<ul class="hs-error-msgs inputs-list ycf-consent-error" style="display:none;margin-top:6px!important;"><li><label class="hs-error-msg" style="color:#e53e3e!important;font-size:12px!important;font-weight:400!important;">Please confirm parent/guardian awareness to continue.</label></li></ul>' +
+                    '</div>';
+                  $submitContainer.before(consentHTML);
+
+                  var $consent = $form.find('#ycf-parent-consent');
+                  var $consentError = $form.find('.ycf-consent-error');
+
+                  // Combined gating: submit is blocked if age is invalid OR consent is unchecked
+                  var ageInvalid = false;
+                  var consentMissing = true;
+
+                  function refreshSubmitState() {
+                    if (ageInvalid || consentMissing) {
+                      $submitBtn.prop('disabled', true).css({ 'opacity': '0.5', 'cursor': 'not-allowed' });
+                    } else {
+                      $submitBtn.prop('disabled', false).css({ 'opacity': '', 'cursor': '' });
+                    }
                   }
-                  function unlockSubmit() {
-                    $submitBtn.prop('disabled', false).css({ 'opacity': '', 'cursor': '' });
-                  }
+
+                  // Start disabled until consent is checked
+                  refreshSubmitState();
+
+                  $consent.on('change', function() {
+                    consentMissing = !this.checked;
+                    if (this.checked) $consentError.hide();
+                    refreshSubmitState();
+                  });
 
                   // Track age + disable button + show error in real time
                   $ageInput.on('input change', function() {
                     submittedAge = parseInt($(this).val(), 10);
                     if (!isNaN(submittedAge) && submittedAge > 18) {
                       showAgeError();
-                      lockSubmit();
+                      ageInvalid = true;
                     } else {
                       clearAgeError();
-                      unlockSubmit();
+                      ageInvalid = false;
                     }
+                    refreshSubmitState();
                   });
                 },
 
